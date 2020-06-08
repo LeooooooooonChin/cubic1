@@ -1,22 +1,22 @@
 # cubic
 
 #### Description
-分布式应用监控工具，提供agent  ui,可快速进行arthas 嵌入
+
+Distributed application monitor tool, support agent ui, quick use arthas
 
 #### Software Architecture
 Software architecture description
+- TODO
 
-#### Installation
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
 
 #### Instructions
+1.  `git clone git@github.com:LeooooooooonChin/cubic.git`
+2.  run `./mvnw clean package  -DskipTests` or packages `./script/build.sh`
+3.  package successful `agent` in dir `agent-dist`
+4.  package successful `proxy` in dir `agent-proxy-dist`
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+#### quick start
+[quick start](https://github.com/LeooooooooonChin/cubic/blob/master/docs/cn/quick_start.md)
 
 #### Contribution
 

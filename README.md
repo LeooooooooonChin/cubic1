@@ -21,21 +21,20 @@
 
 ## 安装教程
 
-1.  `git clone git@github.com:qianglu1989/cubic.git`
+1.  `git clone git@github.com:LeooooooooonChin/cubic.git`
 2.  执行`./mvnw clean package  -DskipTests` 或执行打包脚本 `./script/build.sh`
-3.  打包完成的agent 在agent-dist目录下
-4.  打包完成的proxy 在agent-proxy-dist目录下
+3.  打包完成的`agent` 在`agent-dist`目录下
+4.  打包完成的`proxy` 在`agent-proxy-dist`目录下
 
 
 ## 使用文档
 - [快速开始](docs/cn/quick_start.md)
  
 ## JDK版本
-    目前项目编译使用的是JDK1.8
+    目前项目编译使用的是JDK1.8+
 
 
 ## 使用说明
-
 
 1. agent 加载如下,将agent-dist整体拷贝到一个目录进行加载，里面的结构请不要进行变动，不要单独拷贝一个jar
     java -jar -javaagent:/xxx/agent-dist/cubic-agent.jar  yyy.jar
