@@ -2,6 +2,10 @@
 
 cd "${0%/*}"
 cd ..
+
+echo " install-file to maven repository linux-tools.jar"
+mvn install:install-file -Dfile=DependLib/linux-tools-1.8.jar -DgroupId=com.sun -DartifactId=linux-tools -Dversion=1.8 -Dpackaging=jar
+
 BASE_DIR=`pwd`
 echo $BASE_DIR
 BASE_UI_DIR="cubic-ui"
@@ -16,6 +20,7 @@ fi
 echo "================ starting to build cubic ui ================"
 cd "$BASE_UI_DIR"
 echo `pwd`
+npm install
 npm run build:prod
 echo "================ starting to build cubic agent ================"
 cd ..

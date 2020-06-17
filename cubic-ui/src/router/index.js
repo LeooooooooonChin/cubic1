@@ -77,7 +77,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
+        component: () => import('@/views/dashboard/list'),
         name: 'Dashboard',
         meta: { title: '首页', icon: 'dashboard', affix: true }
       }
@@ -94,7 +94,9 @@ export const constantRoutes = [
         meta: { title: '命令模式', icon: 'eye' }
       }
     ]
-  }
+  },
+  // 404 page must be placed at the end !!!
+  { path: '*', redirect: '/404', hidden: true }
   // {
   //   path: '/listTable',
   //   component: Layout,

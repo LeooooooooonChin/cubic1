@@ -8,7 +8,7 @@ package com.matrix.proxy.util;
  */
 public enum ResponseCode {
 
-    RESP_TYPE_HEARTBEAT(0),
+    HEARTBEAT(0),
 
     /**
      * 基础模式
@@ -23,7 +23,12 @@ public enum ResponseCode {
     /**
      * arthas模式
      */
-    ARTHAS(3);
+    ARTHAS(3),
+
+    /**
+     * 注册REGIST
+     */
+    REGIST(4);
 
 
     private Integer code;
