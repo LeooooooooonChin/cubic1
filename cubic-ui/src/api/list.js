@@ -2,7 +2,23 @@ import request from '@/utils/request'
 
 export function appList(query) {
   return request({
-    url: '/app/getAppList',
+    url: '/app/getList',
+    method: 'get',
+    params: query
+  })
+}
+
+export function getInstanceInfo(query) {
+  return request({
+    url: '/app/getInstanceInfo',
+    method: 'get',
+    params: query
+  })
+}
+
+export function getInstanceNames(query) {
+  return request({
+    url: '/app/getInstanceNames',
     method: 'get',
     params: query
   })
