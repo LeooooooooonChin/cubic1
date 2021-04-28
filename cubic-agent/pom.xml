@@ -42,13 +42,6 @@
             <artifactId>slf4j-api</artifactId>
             <version>1.7.30</version>
         </dependency>
-
-        <dependency>
-            <groupId>matrix.cubic</groupId>
-            <artifactId>cubic-serialization-protobuf</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -148,10 +141,6 @@
                                 <relocation>
                                     <pattern>${shade.org.apache.commons.source}</pattern>
                                     <shadedPattern>${shade.org.apache.commons.target}</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>com.cubic.serialization</pattern>
-                                    <shadedPattern>com.cubic.agent.dependencies.com.cubic.serialization</shadedPattern>
                                 </relocation>
                             </relocations>
                             <filters>

@@ -1,7 +1,6 @@
 package com.cubic.proxy.common.handler;
 
 import com.cubic.proxy.common.server.MessageProcessor;
-import com.cubic.serialization.agent.v1.CommonMessage;
 
 /**
  * @ClassName MessgaeProcess
@@ -11,5 +10,5 @@ import com.cubic.serialization.agent.v1.CommonMessage;
  */
 public interface ServerMessageProcess extends MessageProcessor {
 
-    boolean ackSync(CommonMessage msg);
+    public boolean ackSync(String msg);
 }

@@ -1,6 +1,5 @@
 package com.cubic.proxy.common.server;
 
-import com.cubic.serialization.agent.v1.CommonMessage;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
@@ -13,5 +12,5 @@ public interface MessageProcessor {
 
     Integer code();
 
-    void process(ChannelHandlerContext ctx, CommonMessage datagram);
+    void process(ChannelHandlerContext ctx, String datagram);
 }

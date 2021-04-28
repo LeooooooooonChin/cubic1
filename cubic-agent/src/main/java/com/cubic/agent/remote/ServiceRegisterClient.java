@@ -1,11 +1,12 @@
 package com.cubic.agent.remote;
 
 import com.cubic.agent.boot.CommonService;
-import com.cubic.agent.boot.DefaultService;
 import com.cubic.agent.boot.ServiceManager;
-import com.cubic.agent.conf.AgentConfig;
 import com.cubic.agent.utils.OSUtil;
-import com.cubic.serialization.agent.v1.CommonMessage;
+import com.google.gson.Gson;
+import com.cubic.agent.boot.DefaultService;
+import com.cubic.agent.module.Message;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import org.slf4j.Logger;
@@ -59,29 +60,37 @@ public class ServiceRegisterClient implements CommonService, AgentChannelListene
 
     @Override
     public void run() {
+
         if (ChannelStatus.CONNECTION == status) {
+
             try {
-                CommonMessage.Builder commonMessage = CommonMessage.newBuilder();
+                Gson gson = new Gson();
+                Message message = new Message(CommandCode.HEARTBEAT.getCode(), "heart beat", "0000");
+
                 if (!registed) {
-                    commonMessage.setId("0000");
-                    commonMessage.setCode(CommandCode.REGIST.getCode());
-                    commonMessage.setBody("register");
-                    commonMessage.putAllOsInfo(OSUtil.buildOSInfo());
-                    commonMessage.setInstanceName(AgentConfig.Agent.SERVICE_NAME);
-                    commonMessage.setInstanceUuid(AgentConfig.Agent.INSTANCE_UUID);
-                    commonMessage.setInstanceVersion(AgentConfig.Agent.VERSION);
+                    message.setCode(CommandCode.REGIST.getCode());
+                    message.setBody("register");
+                    message.setOsInfo(OSUtil.buildOSInfo());
                 }
                 AgentNettyClient client = ServiceManager.INSTANCE.findService(AgentClientManager.class).getClient();
-                client.getChannel().writeAndFlush(commonMessage.build()).addListener((ChannelFutureListener) future -> {
-                    if (!future.isSuccess()) {
-                        logger.error("ServiceRegisterClient send {} fail", commonMessage.getBody());
-                    } else {
-                        logger.debug("send heartbeat:{} channel : {} ", commonMessage.getBody(), client.getChannel());
+                client.getChannel().writeAndFlush(gson.toJson(message)).addListener(new ChannelFutureListener() {
+                    @Override
+                    public void operationComplete(ChannelFuture future) throws Exception {
+                        if (!future.isSuccess()) {
+                            logger.error("ServiceRegisterClient send {}fail", message.getBody());
+                        } else {
+                            logger.debug("send heartbeat:{}  channel : {} ", message.getBody(), client.getChannel());
+                        }
                     }
                 });
+
             } catch (Exception e) {
                 logger.warn("ServiceRegisterClient execute fail.{}", e.getMessage());
             }
+
         }
+
     }
+
+
 }

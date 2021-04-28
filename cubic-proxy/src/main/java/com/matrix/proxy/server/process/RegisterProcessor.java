@@ -6,10 +6,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cubic.proxy.common.constant.CommandCode;
-import com.cubic.proxy.common.server.ServerConnectionStore;
-import com.cubic.serialization.agent.v1.CommonMessage;
 import com.matrix.proxy.entity.Information;
 import com.matrix.proxy.mapper.InformationMapper;
+import com.matrix.proxy.module.Message;
+import com.cubic.proxy.common.server.ServerConnectionStore;
 import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,7 @@ import java.util.*;
  * @author luqiang
  */
 @Service
-public class RegisterProcessor extends DefaultMessageProcess {
+public class RegisterProcessor extends DefaultMessageProcess   {
 
     private static final Logger logger = LoggerFactory.getLogger(RegisterProcessor.class);
 
@@ -42,16 +42,20 @@ public class RegisterProcessor extends DefaultMessageProcess {
     }
 
     @Override
-    public void process(ChannelHandlerContext ctx, CommonMessage message) {
-        String id = message.getInstanceName() + "_" + message.getInstanceUuid();
+    public void process(ChannelHandlerContext ctx, String message) {
+        Message msg = JSON.parseObject(message, Message.class);
+        String id = msg.getInstanceName() + "_" + msg.getInstanceUuid();
         connectionStore.register(id, ctx.channel());
         //进行数据注册
-        insertJvmInfo(message, id);
+
+        insertJvmInfo(msg, id);
+
         logger.info("注册成功！实例id ：{} ,channel :{}", id, ctx.channel());
+
         ctx.channel().writeAndFlush(initRegisterResponse(id));
     }
 
-    private void insertJvmInfo(CommonMessage msg, String id) {
+    private void insertJvmInfo(Message msg, String id) {
 
         QueryWrapper<Information> wrapper = new QueryWrapper<>();
         wrapper.eq("app_id", id);
@@ -60,9 +64,11 @@ public class RegisterProcessor extends DefaultMessageProcess {
             return;
         }
 
+
+
         Information.InformationBuilder builder = Information.builder().instanceId(msg.getInstanceUuid()).
                 instanceName(msg.getInstanceName()).version(msg.getInstanceVersion());
-        Map<String, String> osInfo = msg.getOsInfoMap();
+        Map<String, String> osInfo = msg.getOsInfo();
         String info = osInfo.get("jvm_info");
 
         JSONObject jvmInfo = JSON.parseObject(info);

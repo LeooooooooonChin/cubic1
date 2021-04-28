@@ -5,7 +5,6 @@ package com.matrix.proxy.server.process;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.cubic.proxy.common.constant.CommandCode;
-import com.cubic.serialization.agent.v1.CommonMessage;
 import com.matrix.proxy.entity.Information;
 import com.matrix.proxy.mapper.InformationMapper;
 import com.matrix.proxy.module.Message;
@@ -40,15 +39,17 @@ public class ProxyHeartbeatProcessor extends DefaultMessageProcess {
 
     @Override
     @Transactional(rollbackOn = Exception.class)
-    public void process(ChannelHandlerContext ctx, CommonMessage message) {
+    public void process(ChannelHandlerContext ctx, String message) {
         if (logger.isDebugEnabled()) {
             logger.info("receive  client heartbeat, {}", message);
         }
-        updateHeardBeat(message.getInstanceUuid());
+        Message msg = JSON.parseObject(message, Message.class);
+        updateHeardBeat(msg.getInstanceUuid());
         ctx.channel().writeAndFlush(heartbeatResponse);
     }
 
     public void updateHeardBeat(String instanceId) {
+
         Information information = Information.builder().lastHeartbeat(new Date()).build();
         UpdateWrapper<Information> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("instance_id",instanceId);
@@ -57,6 +58,7 @@ public class ProxyHeartbeatProcessor extends DefaultMessageProcess {
 
 
     private String initHeartbeatResponse() {
+
         Map<String, Object> result = new HashMap<>(16);
         result.put("code", CommandCode.HEARTBEAT.getCode());
         result.put("command", "heartbeat");
