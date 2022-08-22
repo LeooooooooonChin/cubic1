@@ -1,6 +1,32 @@
 /agent-dist/
 *.iml
 /agent-proxy-dist/
+
 .idea
-**/target
-**/dependency-reduced-pom.xml
+target/
+*.ts
+
+/nbproject/private/
+/build/
+/nbbuild/
+/nbdist/
+*.json
+
+/node_modules
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+/cubic-agent/dependency-reduced-pom.xml

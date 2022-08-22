@@ -21,31 +21,15 @@ Demo: http://47.104.79.116:6080
 
 ## 开发环境部署
 
-只需两步：
+**只需两步：**
  - 执行cubic-proxy -> resources -> db -> init.sql 创建表
  - 执行运行脚本 build-start.sh 打包部署应用
 
+**如有问题？**
+
+请看Q/A章节y
  
-## 注意事项
-
-1、环境
- - JDK 1.8
- - MySQL 5.5+
-
-
-2、 JDK版本错误或tools.jar不存在
-
-cubic使用的java为JAVA_HOME/bin/java, 需要JDK8及以上，但"不要求"与目标应用的JVM使用相同的JDK版本。
-
-cubic需要依赖JAVA_HOME/lib/tools.jar
-
-JAVA_HOME的定位，通过读取环境变量JAVA_HOME，如果没有定义，则尝试通过"which java"定位java从而获得相对路径。
-
-可通过echo $JAVA_HOME 查看当前配置
-
-3、如果linux 上出现java.lang.NoClassDefFoundError: com/sun/tools/attach/VirtualMachine
-此时`echo $JAVA_HOME `发现也已经配置，请在应用启动参数上增加 `-Xbootclasspath/a:$JAVA_HOME/lib/tools.jar`
-
+ 
 ## 文档
 - [快速开始](docs/cn/quick_start.md)
 - [远程主机命令下发（动态arthas）](docs/cn/arthas_tools.md)
@@ -56,6 +40,8 @@ JAVA_HOME的定位，通过读取环境变量JAVA_HOME，如果没有定义，�
 | ---------------- | ------------------------------------------------------------ |
 | config           | 存放agent配置文件                                            |
 | cubic-proxy      | 代理应用，用于接收agent数据                                  |
+| cubic-proxy-common      | 公共基础参数                                 |
+| cubic-proxy-websocket      | 代理应用，用于接收页面与proxy之间的数据通信                             |
 | cubic-ui         | 页面UI，提供前端各种功能展示,打包完 将dist目录数据拷贝到cubic-proxy |
 | docs             | 文档                                                         |
 | scripts          | 包含打包脚本、启动脚本                                       |
@@ -120,17 +106,37 @@ JAVA_HOME的定位，通过读取环境变量JAVA_HOME，如果没有定义，�
 ![历史线程栈](https://images.gitee.com/uploads/images/2021/0410/000408_02eab12d_1168339.png "屏幕截图.png")
 
 ## Q&A
-1、Q: 为什么页面迭代这么慢？
+**1、Q : 为什么页面迭代这么慢？**
 
-A: 因为目前自己抽时间在写，所以前端UI 有些小BUG ,功能、部署、脚本等等都在完善中，马上准备使用最新的VUE 那一套来进行页面的输出迭代了，欢迎各位大牛贡献代码。
+A : 因为目前自己抽时间在写，所以前端UI 有些小BUG ,功能、部署、脚本等等都在完善中，马上准备使用最新的VUE 那一套来进行页面的输出迭代了，欢迎各位大牛贡献代码。
 
-2、Q: 为什么最近几个月未更新？
+**2、Q : 为什么最近几个月未更新？**
 
-A: 因为换工作等问题导致的，后面会严格按照每月一个大版本进行更新
+A : 因为换工作等问题导致的，后面会严格按照每月一个大版本进行更新
 
-3、Q: 编译后protobuf文件找不到？
+**3、Q : 编译后protobuf文件找不到？**
 
-A: 重新执行下 mvn compile
+A : 重新执行下 mvn compile
+
+
+**4、Q : 环境依赖**
+
+A : JDK 1.8、 MySQL 5.5+
+
+
+**5、 Q : 报JDK版本错误或tools.jar不存在问题**
+
+A : cubic使用的java为JAVA_HOME/bin/java, 需要JDK8及以上，但"不要求"与目标应用的JVM使用相同的JDK版本。
+
+cubic需要依赖JAVA_HOME/lib/tools.jar
+JAVA_HOME的定位，通过读取环境变量JAVA_HOME，如果没有定义，则尝试通过"which java"定位java从而获得相对路径。
+
+可通过echo $JAVA_HOME 查看当前配置
+
+**6、Q : 如果linux 上出现java.lang.NoClassDefFoundError: com/sun/tools/attach/VirtualMachine**
+
+A: 此时`echo $JAVA_HOME `发现也已经配置，请在应用启动参数上增加 `-Xbootclasspath/a:$JAVA_HOME/lib/tools.jar`
+
 
 ## 组织
  让我们一起学习成长，关注公众号获得每日一个知识点的储备，让我们一起成长
@@ -140,9 +146,11 @@ A: 重新执行下 mvn compile
 
  ![输入图片说明](https://images.gitee.com/uploads/images/2020/1012/211345_e216e60c_1168339.jpeg "架构技术.jpg")
 
+#### QQ群
 
-#### 感谢我们的小伙伴
-[![Giteye chart](https://chart.giteye.net/gitee/dromara/cubic/6E6HZTAA.png)](https://giteye.net/chart/6E6HZTAA)
+ <img src="https://gitee.com/dromara/cubic/raw/master/docs/qq.jpeg" width="200px" />
 
-#### 一起成长
-[![Giteye chart](https://chart.giteye.net/gitee/dromara/cubic/JQD5ZBUE.png)](https://giteye.net/chart/JQD5ZBUE)
+#### 欢迎加入社区星球
+
+  <img src="https://gitee.com/dromara/cubic/raw/master/docs/WechatIMG91.jpeg" width="200px" />
+
